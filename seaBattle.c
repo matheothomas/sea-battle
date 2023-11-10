@@ -129,7 +129,7 @@ void placeShips(sea **sships, sea **stouches){
 void sent(sea **stouches, int c1, int c2, int isShipTouched){
 	printf("Sent c1 : %d\n", c1);
 	printf("Sent c2 : %d\n", c2);
-	printf("Sent isShipTouched : %d\n", c2);
+	printf("Sent isShipTouched : %d\n", isShipTouched);
 	stouches[c1][c2].touched = isShipTouched;
 }
 
