@@ -14,8 +14,8 @@
 
 #define PORT 8080
 
-netParamsServ mainNetworkServ(){
-	netParamsServ p;
+netParams mainNetworkServ(){
+	netParams p;
 	
 	int opt = 1;
 	socklen_t addrlen = sizeof(p.address);
@@ -29,8 +29,8 @@ netParamsServ mainNetworkServ(){
 	}
 	
 	// Forcefully attaching socket to the port 8080
-	if(setsockopt(p.server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))){
-		perror("sesockopt\n");
+	if(setsockopt(p.server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))){
+		perror("setsockopt\n");
 		exit(EXIT_FAILURE);
 	}
 	p.address.sin_family = AF_INET;
@@ -60,8 +60,8 @@ netParamsServ mainNetworkServ(){
 
 
 
-netParamsClient mainNetworkClient(char IPADDR[]){
-	netParamsClient p;
+netParams mainNetworkClient(char IPADDR[]){
+	netParams p;
 		
 	char *hello = "Connected to client.\n";
 	char buffer[1024] = { 0 };
@@ -92,57 +92,4 @@ netParamsClient mainNetworkClient(char IPADDR[]){
 }
 
 
-
-int main(int argc, char *argv[]){
-	if(argc >= 2){
-		if(strcmp(argv[1], "server") == 0){
-			netParamsServ p = mainNetworkServ();
-	
-			char buffer[1024] = { 0 };
-			char s[1024];
-			while(strcmp(buffer, "end") != 0){
-				memset(buffer, 0, sizeof(buffer));
-		
-			printf("Enter message : ");
-				scanf("%s", s);
-		
-				send(p.new_socket, s, strlen(s), 0);
-		
-				p.valread = read(p.new_socket, buffer, 1024 -1);
-				printf("%s\n", buffer);
-			}
-			// closing the connected socket
-			close(p.new_socket);
-			// closing the listening socket
-			close(p.server_fd);
-		} else if(strcmp(argv[1], "client") == 0){
-			char *IPADDR = argv[2];
-			printf("ip address : %s\n", IPADDR);
-			netParamsClient p = mainNetworkClient(IPADDR);
-
-			char buffer[1024] = { 0 };
-			char s[1024];
-			while(strcmp(buffer, "end") != 0){
-				memset(buffer, 0, sizeof(buffer));
-		
-				printf("Enter message : ");
-				scanf("%s", s);
-		
-				send(p.client_fd, s, strlen(s), 0);
-		
-				p.valread = read(p.client_fd, buffer, 1024-1);
-				printf("%s\n", buffer);
-			}
-	
-			// Closing the connected socket
-			close(p.client_fd);	
-		} else {
-			printf("Wrong parameter entered, enter server or client.\n");
-		}
-	} else {
-		printf("Type \"./network server\" or \"./network client SERVER_IP_ADDRESS\".\n");
-	}
-	
-	return 0;
-}
 

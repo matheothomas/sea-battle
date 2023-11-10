@@ -9,6 +9,8 @@
 
 #define SIZE 10
 
+int infoShip[] = { -1, 5, 4, 3, 3, 2 };
+
 sea **initSea(){
 	sea **s = (sea **)malloc(SIZE*sizeof(sea *));
 	for(int i = 0; i < SIZE; i++){
@@ -125,11 +127,16 @@ void placeShips(sea **sships, sea **stouches){
 }
 
 void sent(sea **stouches, int c1, int c2, int isShipTouched){
+	printf("Sent c1 : %d\n", c1);
+	printf("Sent c2 : %d\n", c2);
+	printf("Sent isShipTouched : %d\n", c2);
 	stouches[c1][c2].touched = isShipTouched;
 }
 
 int received(sea **sships, int c1, int c2){
 	int touched = 1;
+	printf("Received c1 : %d\n", c1);
+	printf("Received c2 : %d\n", c2);
 	if(sships[c1][c2].isShip != 0){
 		sships[c1][c2].touched = 2;
 		touched = 2;
@@ -155,7 +162,7 @@ void loadPreConfig(sea **s){
 	placeShip(s, 4, 6, 7, 'r');
 	placeShip(s, 5, 9, 1, 'r');
 }
-
+/*
 int main(void){
 	sea **s1ships = initSea();
 	sea **s1touches = initSea();
@@ -164,7 +171,8 @@ int main(void){
 	//placeShips(s1ships, s1touches);
 	loadPreConfig(s1ships);
 	
-	sent(s1ships, 1, 1, received(s1ships, 1, 1));
+	sent(s1touches, 1, 1, received(s1ships, 1, 1));
+	sent(s1touches, 3, 5, received(s1ships, 3, 5));
 
 	showSea(s1ships, s1touches);
 
@@ -172,4 +180,4 @@ int main(void){
 	freeSea(s1touches);
 	return 0;
 }
-
+*/

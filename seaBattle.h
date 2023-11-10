@@ -10,7 +10,7 @@
 
 
 // 0 is sea, 1 is Carrier, 2 is Battleship, 3 is Destroyer, 4 is Submarine, 5 is Patrol boat.
-int infoShip[] = { -1, 5, 4, 3, 3, 2 };
+//int infoShip[] = { -1, 5, 4, 3, 3, 2 };
 
 
 typedef struct sea {
