@@ -37,6 +37,9 @@ int placeShip(sea **s, int id, int c1, int c2, char dir);
 void placeShips(sea **sships, sea **stouches);
 
 
+// returns 2 if game is won, 1 if ship is sunk, else 0.
+int victoire(int id);
+
 // 
 void sent(sea **stouches, int c1, int c2, int isShipTouched);
 
