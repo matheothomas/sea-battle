@@ -1,6 +1,6 @@
 # sea-battle
 
-seaBattle is a game of sea battle coded in C, with the ability of playing it on two different machines on a same local network.
+**seaBattle** is a game of sea battle coded in C, with the ability of playing it on two different machines on a same local network.
 
 This game helped me understand sockets in C, and has been a great project to make from scratch.
 
