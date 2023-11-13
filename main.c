@@ -27,8 +27,12 @@ int main(int argc, char *argv[]){
 		if(strcmp(argv[1], "server") == 0){
 			netParams p = mainNetworkServ();
 			
-			placeShips(s1ships, s1touches);
-	
+			if(strcmp(argv[2], "preconfig") == 0){
+				loadPreConfig(s1ships);
+			} else {
+				placeShips(s1ships, s1touches);
+			}
+			
 			char buffer1[1024] = { 0 };
 			char s1[2];
 			char posSent1[2];
@@ -110,7 +114,12 @@ int main(int argc, char *argv[]){
 			printf("ip address : %s\n", IPADDR);
 			netParams p = mainNetworkClient(IPADDR);
 			
-			placeShips(s2ships, s2touches);
+
+			if(strcmp(argv[3], "preconfig") == 0){
+				loadPreConfig(s2ships);
+			} else {
+				placeShips(s2ships, s2touches);
+			}
 
 			char buffer2[1024] = { 0 };
 			char s2[2];
