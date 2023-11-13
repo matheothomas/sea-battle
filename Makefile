@@ -1,7 +1,6 @@
 CC=gcc
 OPT=-Wall -Wextra -I /usr/include/SDL2
 OPTSDL=-lSDL2_image -lSDL2_ttf -lSDL2
-#OPTSDL=$(pkg-config --cflags --libs sdl2)
 
 prog: seaBattle.o network.o main.o graphics.o
 	${CC} ${OPT} seaBattle.o network.o main.o graphics.o -o prog ${OPTSDL}

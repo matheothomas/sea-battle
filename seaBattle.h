@@ -8,11 +8,6 @@
 
 // Struct definitions
 
-
-// 0 is sea, 1 is Carrier, 2 is Battleship, 3 is Destroyer, 4 is Submarine, 5 is Patrol boat.
-//int infoShip[] = { -1, 5, 4, 3, 3, 2 };
-
-
 typedef struct sea {
 	int isShip;
 	int touched;	// 0 if not aimed, 1 if aimed but empty, 2 if touched
@@ -40,13 +35,11 @@ void placeShips(sea **sships, sea **stouches);
 // returns 2 if game is won, 1 if ship is sunk, else 0.
 int victoire(int id);
 
-// 
+// Modifies the upper map according to the sent coordinates.
 void sent(sea **stouches, int c1, int c2, int isShipTouched);
 
-//
+// Modifies the lower map according to the received coordinates.
 int received(sea **sships, int c1, int c2);
-
-
 
 // frees the memory of a sea.
 void freeSea(sea **s);

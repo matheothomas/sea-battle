@@ -6,21 +6,24 @@
 #ifndef graphics_h 
 #define graphics_h
 
-// Struct definitions
-
-
-
 // Functions definitions
+
+// Prints a ship symbol on the top map
 void placeShipTop(SDL_Renderer *renderer, int y, int x);
 
+// Prints a ship symbol on the bottom map
 void placeShipBottom(SDL_Renderer *renderer, int y, int x);
 
+// Prints a cross symbol on the top map
 void printCrossTop(SDL_Renderer *renderer, int y, int x);
 
+// Prints a cross symbol on the bottom map
 void printCrossBottom(SDL_Renderer *renderer, int y, int x);
 
+// Prints the ships and crosses of a player 
 void printSea(SDL_Renderer *renderer, sea **s1, sea **s2);
 
+// Loads everything to be displayed in the window
 void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2);
 #endif
 

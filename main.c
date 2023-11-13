@@ -58,7 +58,7 @@ int main(int argc, char *argv[]){
 	
 	SDL_Event event;
 	
-	
+	// Main loop	
 	if(argc >= 2){
 		if(strcmp(argv[1], "server") == 0){
 			netParams p = mainNetworkServ();
@@ -82,10 +82,9 @@ int main(int argc, char *argv[]){
 				while(SDL_PollEvent(&event)){
 					switch(event.type){
 						case SDL_WINDOWEVENT:
-							//printf("window event\n");
 							switch (event.window.event){
 								case SDL_WINDOWEVENT_CLOSE:  
-									printf("appui sur la croix\n");	
+									printf("Window closed.\n");	
 									break;
 								case SDL_WINDOWEVENT_SIZE_CHANGED:
 									width = event.window.data1;
@@ -98,7 +97,6 @@ int main(int argc, char *argv[]){
 						case SDL_MOUSEBUTTONDOWN:
 							y = (event.button.x-20)/40;
 							x = (event.button.y-20)/40;
-							//printf("Appui :%d %d\n", x, y);
 							
 							memset(buffer1, 0, sizeof(buffer1));
 							memset(s1, 0, sizeof(s1));
@@ -109,9 +107,7 @@ int main(int argc, char *argv[]){
 							send(p.new_socket, s1, strlen(s1), 0);
 							
 							// Receiving coordinates
-							//printf("---Receiving coordinates---\n");
 							p.valread = read(p.new_socket, buffer1, 1024-1);
-							//printf("buffer1 : %s\n", buffer1);
 							buffer1[2] = '\0';
 							c1 = atoi(buffer1)/10;
 							c2 = atoi(&buffer1[1]);
@@ -122,10 +118,8 @@ int main(int argc, char *argv[]){
 							} else {
 								gameStatus = 0;
 							}
-							//printf("gameStatus : %d\n", gameStatus);
 
 							// Sending results
-							//printf("---Sending results---\n");
 							posSent1[0] = isShipTouched + '0';
 							posSent1[1] = gameStatus + '0';
 							sleep(1);	
@@ -137,15 +131,12 @@ int main(int argc, char *argv[]){
 							}	
 
 							// Applying results
-							//printf("---Applying results---\n");
 							p.valread = read(p.new_socket, buffer1, 1024-1);
-							//printf("buffer1 : %s\n", buffer1);
 							s1[2] = '\0';
 							c1 = atoi(&s1[0])/10;
 							c2 = atoi(&s1[1]);
 							c3 = atoi(&buffer1[0])/10;
 							c4 = atoi(&buffer1[1]);
-							//printf("c3 : %d\n", c3);
 							printf("c4 : %d\n", c4);
 							sent(s1touches, c1, c2, c3); //Filling the upper map
 							if(c4 == 2){
@@ -160,7 +151,7 @@ int main(int argc, char *argv[]){
 
 							break;
 						case SDL_QUIT : 
-							printf("on quitte\n");    
+							printf("Quit game.\n");    
 							running = 0;
 					}
 				}
@@ -197,10 +188,9 @@ int main(int argc, char *argv[]){
 				while(SDL_PollEvent(&event)){
 					switch(event.type){
 						case SDL_WINDOWEVENT:
-							//printf("window event\n");
 							switch (event.window.event){
 								case SDL_WINDOWEVENT_CLOSE:  
-									printf("appui sur la croix\n");	
+									printf("Window closed.\n");	
 									break;
 								case SDL_WINDOWEVENT_SIZE_CHANGED:
 									width = event.window.data1;
@@ -211,10 +201,8 @@ int main(int argc, char *argv[]){
 							}
 							break;
 						case SDL_MOUSEBUTTONDOWN:
-							//printf("Appui :%d %d\n", event.button.x, event.button.y);
 							y = (event.button.x-20)/40;
 							x = (event.button.y-20)/40;
-							printf("Appui :%d %d\n", x, y);
 							
 							memset(buffer2, 0, sizeof(buffer2));
 							memset(s2, 0, sizeof(s2));
@@ -225,9 +213,7 @@ int main(int argc, char *argv[]){
 							send(p.client_fd, s2, strlen(s2), 0);
 							
 							// Receiving coordinates
-							//printf("---Receiving coordinates---\n");
 							p.valread = read(p.client_fd, buffer2, 1024-1);
-							//printf("buffer2 : %s\n", buffer2);
 							buffer2[2] = '\0';
 							c1 = atoi(buffer2)/10;
 							c2 = atoi(&buffer2[1]);
@@ -238,10 +224,8 @@ int main(int argc, char *argv[]){
 							} else {
 								gameStatus = 0;
 							}
-							//printf("gameStatus : %d\n", gameStatus);
 
 							// Sending results
-							//printf("---Sending results---\n");
 							posSent2[0] = isShipTouched + '0';
 							posSent2[1] = gameStatus + '0';
 							sleep(1);	
@@ -253,16 +237,12 @@ int main(int argc, char *argv[]){
 							}	
 
 							// Applying results
-							//printf("---Applying results---\n");
 							p.valread = read(p.client_fd, buffer2, 1024-1);
-							//printf("buffer2 : %s\n", buffer2);
 							s2[2] = '\0';
 							c1 = atoi(&s2[0])/10;
 							c2 = atoi(&s2[1]);
 							c3 = atoi(&buffer2[0])/10;
 							c4 = atoi(&buffer2[1]);
-							//printf("c3 : %d\n", c3);
-							//printf("c4 : %d\n", c4);
 							sent(s2touches, c1, c2, c3);
 							if(c4 == 2){
 								printf("Gagné !\n");
@@ -276,7 +256,7 @@ int main(int argc, char *argv[]){
 
 							break;
 						case SDL_QUIT : 
-							printf("on quitte\n");    
+							printf("Quit game.\n");    
 							running = 0;
 					}
 				}

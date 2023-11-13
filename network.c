@@ -57,9 +57,6 @@ netParams mainNetworkServ(){
 	return p;
 }
 
-
-
-
 netParams mainNetworkClient(char IPADDR[]){
 	netParams p;
 		
@@ -90,6 +87,3 @@ netParams mainNetworkClient(char IPADDR[]){
 	printf("%s\n", buffer);
 	return p;
 }
-
-
-

@@ -9,6 +9,7 @@
 
 #define SIZE 10
 
+// 0 is sea, 1 is Carrier, 2 is Battleship, 3 is Destroyer, 4 is Submarine, 5 is Patrol boat.
 int infoShip[] = { -1, 5, 4, 3, 3, 2 };
 
 
@@ -117,9 +118,6 @@ void placeShips(sea **sships, sea **stouches){
 		printf("Enter orientation of ship of size %d : (u, d, r, l)", infoShip[i]);
 		scanf("%c%*c", &dir);
 		
-		//coord1--;
-		//coord2--;
-		
 		if(placeShip(sships, i, coord1, coord2, dir) != 0){
 			i--;
 		} else {
@@ -128,14 +126,11 @@ void placeShips(sea **sships, sea **stouches){
 	}
 }
 
-
-
 int victoire(int id){
 	infoShip[id] --;
 	int isVictoire = 2;
 	int isSunk = 0;
 	for(int i = 1; i < 6; i++){
-		//printf("infoShip[%d] = %d\n", i, infoShip[i]);
 		if(infoShip[i] == 0){
 			//printf("Coulé !\n");
 			isSunk = 1;
@@ -151,16 +146,11 @@ int victoire(int id){
 }
 
 void sent(sea **stouches, int c1, int c2, int isShipTouched){
-	//printf("Sent c1 : %d\n", c1);
-	//printf("Sent c2 : %d\n", c2);
-	//printf("Sent isShipTouched : %d\n", isShipTouched);
 	stouches[c1][c2].touched = isShipTouched;
 }
 
 int received(sea **sships, int c1, int c2){
 	int touched = 1;
-	//printf("Received c1 : %d\n", c1);
-	//printf("Received c2 : %d\n", c2);
 	if(sships[c1][c2].isShip != 0){
 		sships[c1][c2].touched = 2;
 		touched = 2;
@@ -169,8 +159,6 @@ int received(sea **sships, int c1, int c2){
 	}
 	return touched;
 }
-
-
 
 void freeSea(sea **s){
 	for(int i = 0; i < SIZE; i++){

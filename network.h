@@ -17,23 +17,13 @@ typedef struct netParams {
 	struct sockaddr_in serv_addr;
 } netParams;
 
-//typedef struct netParamsServ {
-//	int server_fd;
-//	int new_socket;
-//	struct sockaddr_in address;
-//} netParamsServ;
-
-//typedef struct netParamsClient {
-//	int client_fd;
-//	int status;
-//	int valread;
-//	struct sockaddr_in serv_addr;
-//} netParamsClient;
-
 
 // Functions definitions
+
+// Defines and configures the socket for the server.
 netParams mainNetworkServ();
 
+// Defines and configures the socket for the client.
 netParams mainNetworkClient(char IPADDR[]);
 
 #endif
