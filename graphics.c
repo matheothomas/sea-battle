@@ -52,9 +52,9 @@ void printCrossBottom(SDL_Renderer *renderer, int y, int x){
 void printSea(SDL_Renderer *renderer, sea **s1, sea **s2){
 	for(int i = 0; i < 10; i++){
 		for(int j = 0; j < 10; j++){
-			if(s2[i][j].touched == 1){
+			if((s2[i][j].touched > 99 && s2[i][j].touched < 200) || s2[i][j].touched == 1){ 	// s2[i][j].touched == 1
 				printCrossTop(renderer, i, j);
-			} else if(s2[i][j].touched == 2){
+			} else if(s2[i][j].touched > 200 || s2[i][j].touched == 2){						// s2[i][j].touched == 2
 				placeShipTop(renderer, i, j);
 			}
 			if(s1[i][j].isShip != 0){
@@ -67,7 +67,7 @@ void printSea(SDL_Renderer *renderer, sea **s1, sea **s2){
 	}
 }
 
-void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2, int y1, int x1){
+void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2){
 	SDL_Rect rect;
 
 	SDL_SetRenderDrawColor(renderer, 40, 40, 40, 255);
@@ -93,16 +93,14 @@ void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2, int y1, int x1)
 	}
 
 	
-	s2[x1][y1].touched = 1;
 	printSea(renderer, s1, s2);	
-	printCrossBottom(renderer, 3, 1);
 
 	SDL_RenderPresent(renderer);
 }
 
 
 
-
+/*
 
 int main(void){
 	sea **s1ships = initSea();
@@ -157,16 +155,12 @@ int main(void){
 	int y = 0;
 	//initFenetre(renderer);
 	
-	while (running) {
-	
-		while (SDL_PollEvent(&event))
-		{
-			switch(event.type)
-			{
+	while(running){
+		while(SDL_PollEvent(&event)){
+			switch(event.type){
 				case SDL_WINDOWEVENT:
 					printf("window event\n");
-					switch (event.window.event)  
-					{
+					switch (event.window.event){
 						case SDL_WINDOWEVENT_CLOSE:  
 							printf("appui sur la croix\n");	
 							break;
@@ -176,7 +170,7 @@ int main(void){
 							printf("Size : %d%d\n", width, height);
 						default:
 							afficherFenetre(renderer, s1ships, s1touches, 0, 0);
-					}   
+					}
 				    break;
 				case SDL_MOUSEBUTTONDOWN:
 					//printf("Appui :%d %d\n", event.button.x, event.button.y);
@@ -187,13 +181,12 @@ int main(void){
 					afficherFenetre(renderer, s1ships, s1touches, x, y);
 					
 					
-					
 					break;
 				case SDL_QUIT : 
 					printf("on quitte\n");    
 					running = 0;
 			}
-		}	
+		}
 		SDL_Delay(1); //  delai minimal
 	}
 
@@ -206,3 +199,4 @@ int main(void){
 	SDL_Quit();
 	return 0;
 }
+*/

@@ -21,6 +21,6 @@ void printCrossBottom(SDL_Renderer *renderer, int y, int x);
 
 void printSea(SDL_Renderer *renderer, sea **s1, sea **s2);
 
-void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2, int y1, int x1);
+void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2);
 #endif
 
