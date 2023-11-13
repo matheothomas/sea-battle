@@ -1,22 +1,28 @@
 # sea-battle
 
-**seaBattle** is a game of sea battle coded in C, with the ability of playing it on two different machines on a same local network.
+**seaBattle** is a game of sea battle developed in C, with the ability of playing it on two different machines on a same local network.
 
 This game helped me understand sockets in C, and has been a great project to make from scratch.
 
 ## Roadmap
 - [x] Build the core of the game.
 - [x] Add local multiplayer mode.
-- [ ] Build a graphical interface with SDL2.
+- [x] Build a graphical interface with SDL2.
+- [ ] Add a solo mode against a bot.
 
+## Installation 
+Clone the repository :
+```bash
+git clone https://github.com/matheothomas/sea-battle
+```
 
-## How to play
-
-First, compile the code :
+Compile the code :
 ```bash
 make
 ```
-It will create a `prog` executable.
+An executable named `prog` is created.
+
+## How to play
 
 ### On the host/server machine
 Execute `prog` :
@@ -30,3 +36,5 @@ Execute `prog` :
 ./prog client IP_ADDRESS
 ```
 And replace `IP_ADDRESS` with the IP address of the host machine.
+
+To test the program, `preconfig` can be added as a supplementary parameter to load a ship configuration.

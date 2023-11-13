@@ -24,9 +24,6 @@ int main(int argc, char *argv[]){
 	sea **s1touches = initSea();
 	sea **s2ships   = initSea();
 	sea **s2touches = initSea();
-	//loadPreConfig(s1ships);
-	//loadPreConfig(s2ships);
-	
 	
 		
 	// Graphical interface initialisation
@@ -62,7 +59,6 @@ int main(int argc, char *argv[]){
 	SDL_Event event;
 	
 	
-	
 	if(argc >= 2){
 		if(strcmp(argv[1], "server") == 0){
 			netParams p = mainNetworkServ();
@@ -76,16 +72,11 @@ int main(int argc, char *argv[]){
 			char buffer1[1024] = { 0 };
 			char s1[2];
 			char posSent1[2];
-			
 			int c1, c2, c3, c4;
 			int isShipTouched;
 			int gameStatus;
-			
-			
 			int running = 1;
-			int x;
-			int y;
-			
+			int x, y;
 			
 			while(running){
 				while(SDL_PollEvent(&event)){
@@ -107,8 +98,7 @@ int main(int argc, char *argv[]){
 						case SDL_MOUSEBUTTONDOWN:
 							y = (event.button.x-20)/40;
 							x = (event.button.y-20)/40;
-							printf("Appui :%d %d\n", x, y);
-							
+							//printf("Appui :%d %d\n", x, y);
 							
 							memset(buffer1, 0, sizeof(buffer1));
 							memset(s1, 0, sizeof(s1));
@@ -177,12 +167,10 @@ int main(int argc, char *argv[]){
 				SDL_Delay(1); //  delai minimal
 			}
 
-
 			// closing the connected socket
 			close(p.new_socket);
 			// closing the listening socket
 			close(p.server_fd);
-			
 			
 
 		} else if(strcmp(argv[1], "client") == 0){
@@ -199,14 +187,11 @@ int main(int argc, char *argv[]){
 			char buffer2[1024] = { 0 };
 			char s2[2];
 			char posSent2[2];
-			
 			int c1, c2, c3, c4;
 			int isShipTouched;
 			int gameStatus;
-
 			int running = 1;
-			int x;
-			int y;
+			int x, y;
 
 			while(running){
 				while(SDL_PollEvent(&event)){
@@ -231,7 +216,6 @@ int main(int argc, char *argv[]){
 							x = (event.button.y-20)/40;
 							printf("Appui :%d %d\n", x, y);
 							
-
 							memset(buffer2, 0, sizeof(buffer2));
 							memset(s2, 0, sizeof(s2));
 							memset(posSent2, 0, sizeof(posSent2));
