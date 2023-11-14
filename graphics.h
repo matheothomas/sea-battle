@@ -20,6 +20,9 @@ void printCrossTop(SDL_Renderer *renderer, int y, int x);
 // Prints a cross symbol on the bottom map
 void printCrossBottom(SDL_Renderer *renderer, int y, int x);
 
+// Prints "Coulé !" in the status area
+void printCoule(SDL_Renderer *renderer);
+
 // Prints the ships and crosses of a player 
 void printSea(SDL_Renderer *renderer, sea **s1, sea **s2);
 

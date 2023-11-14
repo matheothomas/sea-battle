@@ -10,6 +10,11 @@ This game helped me understand sockets in C, and has been a great project to mak
 - [x] Build a graphical interface with SDL2.
 - [ ] Add a solo mode against a bot.
 
+## Requirements
+- The SDL2 C library
+- git
+- gcc
+
 ## Installation 
 Clone the repository :
 ```bash
@@ -20,20 +25,20 @@ Compile the code :
 ```bash
 make
 ```
-An executable named `prog` is created.
+An executable named `seaBattle` is created.
 
 ## How to play
 
 ### On the host/server machine
-Execute `prog` :
+Execute `seaBattle` :
 ```bash
-./prog server
+./seaBattle server
 ```
 
 ### On the client machine
-Execute `prog` :
+Execute `seaBattle` :
 ```bash
-./prog client IP_ADDRESS
+./seaBattle client IP_ADDRESS
 ```
 And replace `IP_ADDRESS` with the IP address of the host machine.
 

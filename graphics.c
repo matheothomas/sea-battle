@@ -49,6 +49,23 @@ void printCrossBottom(SDL_Renderer *renderer, int y, int x){
 	SDL_RenderDrawLine(renderer, x1+36, y1+5, x1+5, y1+36);
 }
 
+void printCoule(SDL_Renderer *renderer){
+	TTF_Font *font1;
+	font1 = TTF_OpenFont("BebasNeue-Regular.ttf", 100);
+	SDL_Color textColor = {100, 100, 100, 255};
+	
+	//SDL_Rect rect;
+
+	SDL_Surface *surfaceCoule = TTF_RenderText_Solid(font1, "Coulé !", textColor);
+	SDL_Texture *coule = SDL_CreateTextureFromSurface(renderer, surfaceCoule);
+	SDL_Rect couleRect;
+	couleRect.x = 0;
+	couleRect.y = 0;
+	couleRect.w = 0;
+	couleRect.h = 0;
+	SDL_RenderCopy(renderer, coule, NULL, &couleRect);
+}
+
 void printSea(SDL_Renderer *renderer, sea **s1, sea **s2){
 	for(int i = 0; i < 10; i++){
 		for(int j = 0; j < 10; j++){
@@ -82,6 +99,72 @@ void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2){
 	rect.y = 440;
 	rect.w = rect.h = 400;
 	SDL_RenderFillRect(renderer, &rect);
+	
+	// Font
+	TTF_Font *font1;
+	font1 = TTF_OpenFont("BebasNeue-Regular.ttf", 100);
+	SDL_Color textColor = {100, 100, 100, 255};
+	
+	// Title
+	rect.x = 440;
+	rect.y = 20;
+	rect.w = 340;
+	rect.h = 80;
+	SDL_RenderFillRect(renderer, &rect);
+	SDL_Surface *surfaceTitle = TTF_RenderText_Solid(font1, "seaBattle", textColor);
+	SDL_Texture *title = SDL_CreateTextureFromSurface(renderer, surfaceTitle);
+	SDL_Rect titleRect;
+	titleRect.x = 450; 
+	titleRect.y = 30;
+	titleRect.w = 320;
+	titleRect.h = 60;
+	SDL_RenderCopy(renderer, title, NULL, &titleRect);
+	
+	
+	// Game status
+	rect.x = 440;
+	rect.y = 120;
+	rect.w = 340;
+	rect.h = 160;
+	SDL_RenderFillRect(renderer, &rect);
+	SDL_Surface *surfaceStatus = TTF_RenderText_Solid(font1, "Game status", textColor);
+	SDL_Texture *status = SDL_CreateTextureFromSurface(renderer, surfaceStatus);
+	SDL_Rect statusRect;
+	statusRect.x = 450;
+	statusRect.y = 130;
+	statusRect.w = 320;
+	statusRect.h = 60;
+	SDL_RenderCopy(renderer, status, NULL, &statusRect);
+	
+	// Arrows for ship orientation
+	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
+	rect.x = 440;
+	rect.y = 440;
+	rect.w = 340;
+	rect.h = 400;
+	SDL_RenderFillRect(renderer, &rect);
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	rect.x = 510;
+	rect.y = 640;
+	rect.w = 60;
+	rect.h = 60;
+	SDL_RenderFillRect(renderer, &rect);
+	rect.x += 70;
+	rect.y -= 70;
+	rect.w = 60;
+	rect.h = 60;
+	SDL_RenderFillRect(renderer, &rect);
+	rect.x += 70;
+	rect.y += 70;
+	rect.w = 60;
+	rect.h = 60;
+	SDL_RenderFillRect(renderer, &rect);
+	rect.x -= 70;
+	rect.y += 70;
+	rect.w = 60;
+	rect.h = 60;
+	SDL_RenderFillRect(renderer, &rect);
+		
 	
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	for(int i = 1; i < 10; i++){
