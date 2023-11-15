@@ -49,20 +49,27 @@ void printCrossBottom(SDL_Renderer *renderer, int y, int x){
 	SDL_RenderDrawLine(renderer, x1+36, y1+5, x1+5, y1+36);
 }
 
-void printCoule(SDL_Renderer *renderer){
+void printInfo(SDL_Renderer *renderer, int stat){
 	TTF_Font *font1;
 	font1 = TTF_OpenFont("BebasNeue-Regular.ttf", 100);
-	SDL_Color textColor = {100, 100, 100, 255};
+	SDL_Color textColor = {100, 100, 200, 255};
 	
-	//SDL_Rect rect;
-
-	SDL_Surface *surfaceCoule = TTF_RenderText_Solid(font1, "Coulé !", textColor);
+	SDL_Surface *surfaceCoule;
+	
+	if(stat == 1){
+		surfaceCoule = TTF_RenderText_Solid(font1, "Coule !", textColor);
+	} else if(stat == 2){
+		surfaceCoule = TTF_RenderText_Solid(font1, "Gagne !", textColor);
+	} else if (stat == 3){
+		surfaceCoule = TTF_RenderText_Solid(font1, "Perdu...", textColor);
+	}
+	
 	SDL_Texture *coule = SDL_CreateTextureFromSurface(renderer, surfaceCoule);
 	SDL_Rect couleRect;
-	couleRect.x = 0;
-	couleRect.y = 0;
-	couleRect.w = 0;
-	couleRect.h = 0;
+	couleRect.x = 470;
+	couleRect.y = 200;
+	couleRect.w = 280;
+	couleRect.h = 60;
 	SDL_RenderCopy(renderer, coule, NULL, &couleRect);
 }
 
@@ -84,7 +91,7 @@ void printSea(SDL_Renderer *renderer, sea **s1, sea **s2){
 	}
 }
 
-void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2){
+void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2, int stat){
 	SDL_Rect rect;
 
 	SDL_SetRenderDrawColor(renderer, 40, 40, 40, 255);
@@ -174,8 +181,11 @@ void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2){
 			SDL_RenderDrawLine(renderer, 20, 440 + 40*i, 420, 440 + 40*i);
 			SDL_RenderDrawLine(renderer, 20 + 40*i, 440, 20 + 40*i, 840);
 	}
-
 	
+	if(stat != 0){
+		printInfo(renderer, stat);
+	}
+
 	printSea(renderer, s1, s2);	
 
 	SDL_RenderPresent(renderer);

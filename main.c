@@ -5,6 +5,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<unistd.h>
 #include<netinet/in.h>
 #include<arpa/inet.h>
 #include<string.h>
@@ -62,10 +63,11 @@ int main(int argc, char *argv[]){
 	if(argc >= 2){
 		if(strcmp(argv[1], "server") == 0){
 			netParams p = mainNetworkServ();
-			
+			int isConfig = 0;	
 			if(argc >= 3){
 				if(strcmp(argv[2], "preconfig") == 0){
 					loadPreConfig(s1ships);
+					isConfig = 1;
 				}
 			}
 
@@ -78,67 +80,77 @@ int main(int argc, char *argv[]){
 
 			int running = 1;
 			int x, y;
-			char c;
-			int i = 1;
-			int toggle = 0;
 
-			while(running){
-				while(SDL_PollEvent(&event)){
-					switch(event.type){
-						case SDL_WINDOWEVENT:
-							switch (event.window.event){
-								case SDL_WINDOWEVENT_CLOSE:
-									printf("Window closed.\n");
-									break;
-								case SDL_WINDOWEVENT_SIZE_CHANGED:
-									width = event.window.data1;
-									height = event.window.data2;
-									printf("Size : %d%d\n", width, height);
-								default:
-									afficherFenetre(renderer, s1ships, s1touches);
-							}
-							break;
-						case SDL_MOUSEBUTTONDOWN:
-							if(toggle == 0){
-								y = (event.button.x-20)/40;
-								x = (event.button.y-440)/40;
-								if((x == 5 || x == 6) && (y == 12 || y == 13)){
-									c = 'l';
-								} else if((x == 3 || x == 4) && (y == 14 || y == 15)){
-									c = 'u';
-								} else if((x == 6 || x == 7 || x == 8) && (y == 14 || y == 15)){
-									c = 'd';
+			if(isConfig == 0){
+
+				char c;
+				int i = 1;
+				int toggle = 0;
+
+				while(running){
+					while(SDL_PollEvent(&event)){
+						switch(event.type){
+							case SDL_WINDOWEVENT:
+								switch (event.window.event){
+									case SDL_WINDOWEVENT_CLOSE:
+										printf("Window closed.\n");
+										break;
+									case SDL_WINDOWEVENT_SIZE_CHANGED:
+										width = event.window.data1;
+										height = event.window.data2;
+										printf("Size : %d%d\n", width, height);
+									default:
+										afficherFenetre(renderer, s1ships, s1touches, 0);
+								}
+								break;
+							case SDL_MOUSEBUTTONDOWN:
+								if(toggle == 0){
+									y = (event.button.x-20)/40;
+									x = (event.button.y-440)/40;
+									if((x == 5 || x == 6) && (y == 12 || y == 13)){
+										c = 'l';
+										toggle = 1;
+									} else if((x == 3 || x == 4) && (y == 14 || y == 15)){
+										c = 'u';
+										toggle = 1;
+									} else if((x == 6 || x == 7 || x == 8) && (y == 14 || y == 15)){
+										c = 'd';
+										toggle = 1;
+									} else if((x == 5|| x == 6) && (y == 16|| y == 17)){
+										c = 'r';
+										toggle = 1;
+									} else {
+										printf("Choose a direction\n");
+									}
 								} else {
-									c = 'r';
-								}
-								toggle = 1;
-							} else {
-								y = (event.button.x-20)/40;
-								x = (event.button.y-440)/40;
+									y = (event.button.x-20)/40;
+									x = (event.button.y-440)/40;
 
-								if(placeShip(s1ships, i, x, y, c) != 0){
-									i--;
+									if(placeShip(s1ships, i, x, y, c) != 0){
+										i--;
+									}
+									afficherFenetre(renderer, s1ships, s1touches, 0);
+									if(i == 5){
+										running = 0;
+									} else {
+										i++;
+									}
+									toggle = 0;
 								}
-								afficherFenetre(renderer, s1ships, s1touches);
-								if(i == 5){
-									running = 0;
-								} else {
-									i++;
-								}
-								toggle = 0;
-							}
 
-							break;
-						case SDL_QUIT : 
-							printf("Quit game.\n");    
-							running = 0;
+								break;
+							case SDL_QUIT : 
+								printf("Quit game.\n");    
+								running = 0;
+						}
 					}
+					SDL_Delay(1); //  delai minimal
 				}
-				SDL_Delay(1); //  delai minimal
 			}
 
-
+			int status = 0;
 			running = 1;
+			printf("Launching game.\n");
 
 			while(running){
 				while(SDL_PollEvent(&event)){
@@ -153,7 +165,7 @@ int main(int argc, char *argv[]){
 									height = event.window.data2;
 									printf("Size : %d%d\n", width, height);
 								default:
-									afficherFenetre(renderer, s1ships, s1touches);
+									afficherFenetre(renderer, s1ships, s1touches, status);
 							}
 							break;
 						case SDL_MOUSEBUTTONDOWN:
@@ -163,6 +175,7 @@ int main(int argc, char *argv[]){
 							memset(buffer1, 0, sizeof(buffer1));
 							memset(s1, 0, sizeof(s1));
 							memset(posSent1, 0, sizeof(posSent1));
+							status = 0;
 
 							s1[0] = x + '0';
 							s1[1] = y + '0';
@@ -184,10 +197,12 @@ int main(int argc, char *argv[]){
 							// Sending results
 							posSent1[0] = isShipTouched + '0';
 							posSent1[1] = gameStatus + '0';
-							sleep(1);	
+							//sleep(1);	
+							usleep(1000);
 							send(p.new_socket, posSent1, strlen(posSent1), 0);
 							if(gameStatus == 2){
 								printf("Perdu...\n");
+								status = 3;
 								running = 0;
 								break;
 							}	
@@ -202,15 +217,44 @@ int main(int argc, char *argv[]){
 							sent(s1touches, c1, c2, c3); //Filling the upper map
 							if(c4 == 2){
 								printf("Gagné !\n");
+								status = 2;
 								running = 0;
 								break;
 							} else if(c4 == 1){
 								printf("Coulé !\n");
-								printCoule(renderer);
+								status = 1;
 							}	
 
-							afficherFenetre(renderer, s1ships, s1touches);
+							afficherFenetre(renderer, s1ships, s1touches, status);
 
+							break;
+						case SDL_QUIT : 
+							printf("Quit game.\n");    
+							running = 0;
+					}
+				}
+				SDL_Delay(1); //  delai minimal
+			}
+
+			running = 1;
+
+			while(running){
+				while(SDL_PollEvent(&event)){
+					switch(event.type){
+						case SDL_WINDOWEVENT:
+							switch (event.window.event){
+								case SDL_WINDOWEVENT_CLOSE:
+									printf("Window closed.\n");
+									break;
+								case SDL_WINDOWEVENT_SIZE_CHANGED:
+									width = event.window.data1;
+									height = event.window.data2;
+									printf("Size : %d%d\n", width, height);
+								default:
+									afficherFenetre(renderer, s1ships, s1touches, status);
+							}
+							break;
+						case SDL_MOUSEBUTTONDOWN:
 							break;
 						case SDL_QUIT : 
 							printf("Quit game.\n");    
@@ -230,10 +274,12 @@ int main(int argc, char *argv[]){
 			char *IPADDR = argv[2];
 			printf("ip address : %s\n", IPADDR);
 			netParams p = mainNetworkClient(IPADDR);
-
+			
+			int isConfig;
 			if(argc >= 4){
 				if(strcmp(argv[3], "preconfig") == 0){
 					loadPreConfig(s2ships);
+					isConfig = 1;
 				}
 			}
 
@@ -245,67 +291,76 @@ int main(int argc, char *argv[]){
 			int gameStatus;
 			int running = 1;
 			int x, y;
-			char c;
-			int i = 1;
-			int toggle = 0;
+			
+			if(isConfig == 0){
+				char c;
+				int i = 1;
+				int toggle = 0;
 
-			while(running){
-				while(SDL_PollEvent(&event)){
-					switch(event.type){
-						case SDL_WINDOWEVENT:
-							switch (event.window.event){
-								case SDL_WINDOWEVENT_CLOSE:
-									printf("Window closed.\n");
-									break;
-								case SDL_WINDOWEVENT_SIZE_CHANGED:
-									width = event.window.data1;
-									height = event.window.data2;
-									printf("Size : %d%d\n", width, height);
-								default:
-									afficherFenetre(renderer, s2ships, s2touches);
-							}
-							break;
-						case SDL_MOUSEBUTTONDOWN:
-							if(toggle == 0){
-								y = (event.button.x-20)/40;
-								x = (event.button.y-440)/40;
-								if((x == 5 || x == 6) && (y == 12 || y == 13)){
-									c = 'l';
-								} else if((x == 3 || x == 4) && (y == 14 || y == 15)){
-									c = 'u';
-								} else if((x == 6 || x == 7 || x == 8) && (y == 14 || y == 15)){
-									c = 'd';
+				while(running){
+					while(SDL_PollEvent(&event)){
+						switch(event.type){
+							case SDL_WINDOWEVENT:
+								switch (event.window.event){
+									case SDL_WINDOWEVENT_CLOSE:
+										printf("Window closed.\n");
+										break;
+									case SDL_WINDOWEVENT_SIZE_CHANGED:
+										width = event.window.data1;
+										height = event.window.data2;
+										printf("Size : %d%d\n", width, height);
+									default:
+										afficherFenetre(renderer, s2ships, s2touches, 0);
+								}
+								break;
+							case SDL_MOUSEBUTTONDOWN:
+								if(toggle == 0){
+									y = (event.button.x-20)/40;
+									x = (event.button.y-440)/40;
+									if((x == 5 || x == 6) && (y == 12 || y == 13)){
+										c = 'l';
+										toggle = 1;
+									} else if((x == 3 || x == 4) && (y == 14 || y == 15)){
+										c = 'u';
+										toggle = 1;
+									} else if((x == 6 || x == 7 || x == 8) && (y == 14 || y == 15)){
+										c = 'd';
+										toggle = 1;
+									} else if((x == 5 || x == 6) && (6 == 16 || y == 17)){
+										c = 'r';
+										toggle = 1;
+									} else {
+										printf("Choose a direction\n");
+									}
 								} else {
-									c = 'r';
-								}
-								toggle = 1;
-							} else {
-								y = (event.button.x-20)/40;
-								x = (event.button.y-440)/40;
+									y = (event.button.x-20)/40;
+									x = (event.button.y-440)/40;
 
-								if(placeShip(s2ships, i, x, y, c) != 0){
-									i--;
+									if(placeShip(s2ships, i, x, y, c) != 0){
+										i--;
+									}
+									afficherFenetre(renderer, s2ships, s2touches, 0);
+									if(i == 5){
+										running = 0;
+									} else {
+										i++;
+									}
+									toggle = 0;
 								}
-								afficherFenetre(renderer, s2ships, s2touches);
-								if(i == 5){
-									running = 0;
-								} else {
-									i++;
-								}
-								toggle = 0;
-							}
 
-							break;
-						case SDL_QUIT : 
-							printf("Quit game.\n");    
-							running = 0;
+								break;
+							case SDL_QUIT : 
+								printf("Quit game.\n");    
+								running = 0;
+						}
 					}
+					SDL_Delay(1); //  delai minimal
 				}
-				SDL_Delay(1); //  delai minimal
 			}
 
-
+			int status = 0;
 			running = 1;
+			printf("Launching game.\n");
 
 			while(running){
 				while(SDL_PollEvent(&event)){
@@ -320,7 +375,7 @@ int main(int argc, char *argv[]){
 									height = event.window.data2;
 									printf("Size : %d%d\n", width, height);
 								default:
-									afficherFenetre(renderer, s2ships, s2touches);
+									afficherFenetre(renderer, s2ships, s2touches, 0);
 							}
 							break;
 						case SDL_MOUSEBUTTONDOWN:
@@ -330,6 +385,7 @@ int main(int argc, char *argv[]){
 							memset(buffer2, 0, sizeof(buffer2));
 							memset(s2, 0, sizeof(s2));
 							memset(posSent2, 0, sizeof(posSent2));
+							status = 0;
 
 							s2[0] = x + '0';
 							s2[1] = y + '0';
@@ -351,10 +407,12 @@ int main(int argc, char *argv[]){
 							// Sending results
 							posSent2[0] = isShipTouched + '0';
 							posSent2[1] = gameStatus + '0';
-							sleep(1);	
+							//sleep(1);	
+							usleep(1000);
 							send(p.client_fd, posSent2, strlen(posSent2), 0);
 							if(gameStatus == 2){
 								printf("Perdu...\n");
+								status = 3;
 								running = 0;
 								break;
 							}	
@@ -369,15 +427,44 @@ int main(int argc, char *argv[]){
 							sent(s2touches, c1, c2, c3);
 							if(c4 == 2){
 								printf("Gagné !\n");
+								status = 2;
 								running = 0;
 								break;
 							} else if(c4 == 1){
 								printf("Coulé !\n");
-								printCoule(renderer);
+								status = 1;
 							}	
 
-							afficherFenetre(renderer, s2ships, s2touches);
+							afficherFenetre(renderer, s2ships, s2touches, status);
 
+							break;
+						case SDL_QUIT : 
+							printf("Quit game.\n");    
+							running = 0;
+					}
+				}
+				SDL_Delay(1); //  delai minimal
+			}
+
+			running = 1;
+
+			while(running){
+				while(SDL_PollEvent(&event)){
+					switch(event.type){
+						case SDL_WINDOWEVENT:
+							switch (event.window.event){
+								case SDL_WINDOWEVENT_CLOSE:
+									printf("Window closed.\n");
+									break;
+								case SDL_WINDOWEVENT_SIZE_CHANGED:
+									width = event.window.data1;
+									height = event.window.data2;
+									printf("Size : %d%d\n", width, height);
+								default:
+									afficherFenetre(renderer, s1ships, s1touches, status);
+							}
+							break;
+						case SDL_MOUSEBUTTONDOWN:
 							break;
 						case SDL_QUIT : 
 							printf("Quit game.\n");    

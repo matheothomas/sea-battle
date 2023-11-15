@@ -21,6 +21,11 @@ Clone the repository :
 git clone https://github.com/matheothomas/sea-battle
 ```
 
+Move into the folder :
+```bash
+cd sea-battle
+```
+
 Compile the code :
 ```bash
 make
@@ -41,6 +46,18 @@ Execute `seaBattle` :
 ./seaBattle client IP_ADDRESS
 ```
 And replace `IP_ADDRESS` with the IP address of the host machine.
+
+### First part : ship configuration
+For each ship, a direction is chosen using the arrows, then a case is selected in the lower map.
+
+### Second part : play
+A case is chosen in the upper map to attack the other player.
+- If there is a ship, the case turns blue.
+- If there isn't, a cross is shown.
+
+The attacks of the other player are shown in the lower map.
+
+The game is won when a player sunk all ships of the opponent.
 
 
 ## Additional info
