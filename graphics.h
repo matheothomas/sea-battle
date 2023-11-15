@@ -27,6 +27,6 @@ void printInfo(SDL_Renderer *renderer, int stat);
 void printSea(SDL_Renderer *renderer, sea **s1, sea **s2);
 
 // Loads everything to be displayed in the window
-void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2, int stat);
+void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2, int stat, int shipInit);
 #endif
 

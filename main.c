@@ -26,6 +26,8 @@ int main(int argc, char *argv[]){
 	sea **s2ships   = initSea();
 	sea **s2touches = initSea();
 	
+	int infoShip[] = { -1, 5, 4, 3, 3, 2 };
+	
 		
 	// Graphical interface initialisation
 	if(SDL_Init(SDL_INIT_VIDEO) <0){
@@ -100,7 +102,7 @@ int main(int argc, char *argv[]){
 										height = event.window.data2;
 										printf("Size : %d%d\n", width, height);
 									default:
-										afficherFenetre(renderer, s1ships, s1touches, 0);
+										afficherFenetre(renderer, s1ships, s1touches, 0, infoShip[i]);
 								}
 								break;
 							case SDL_MOUSEBUTTONDOWN:
@@ -129,12 +131,12 @@ int main(int argc, char *argv[]){
 									if(placeShip(s1ships, i, x, y, c) != 0){
 										i--;
 									}
-									afficherFenetre(renderer, s1ships, s1touches, 0);
 									if(i == 5){
 										running = 0;
 									} else {
 										i++;
 									}
+									afficherFenetre(renderer, s1ships, s1touches, 0, infoShip[i]);
 									toggle = 0;
 								}
 
@@ -165,7 +167,7 @@ int main(int argc, char *argv[]){
 									height = event.window.data2;
 									printf("Size : %d%d\n", width, height);
 								default:
-									afficherFenetre(renderer, s1ships, s1touches, status);
+									afficherFenetre(renderer, s1ships, s1touches, status, 0);
 							}
 							break;
 						case SDL_MOUSEBUTTONDOWN:
@@ -225,7 +227,7 @@ int main(int argc, char *argv[]){
 								status = 1;
 							}	
 
-							afficherFenetre(renderer, s1ships, s1touches, status);
+							afficherFenetre(renderer, s1ships, s1touches, status, 0);
 
 							break;
 						case SDL_QUIT : 
@@ -251,7 +253,7 @@ int main(int argc, char *argv[]){
 									height = event.window.data2;
 									printf("Size : %d%d\n", width, height);
 								default:
-									afficherFenetre(renderer, s1ships, s1touches, status);
+									afficherFenetre(renderer, s1ships, s1touches, status, 0);
 							}
 							break;
 						case SDL_MOUSEBUTTONDOWN:
@@ -275,7 +277,7 @@ int main(int argc, char *argv[]){
 			printf("ip address : %s\n", IPADDR);
 			netParams p = mainNetworkClient(IPADDR);
 			
-			int isConfig;
+			int isConfig = 0;;
 			if(argc >= 4){
 				if(strcmp(argv[3], "preconfig") == 0){
 					loadPreConfig(s2ships);
@@ -310,7 +312,7 @@ int main(int argc, char *argv[]){
 										height = event.window.data2;
 										printf("Size : %d%d\n", width, height);
 									default:
-										afficherFenetre(renderer, s2ships, s2touches, 0);
+										afficherFenetre(renderer, s2ships, s2touches, 0, infoShip[i]);
 								}
 								break;
 							case SDL_MOUSEBUTTONDOWN:
@@ -326,7 +328,7 @@ int main(int argc, char *argv[]){
 									} else if((x == 6 || x == 7 || x == 8) && (y == 14 || y == 15)){
 										c = 'd';
 										toggle = 1;
-									} else if((x == 5 || x == 6) && (6 == 16 || y == 17)){
+									} else if((x == 5 || x == 6) && (y == 16 || y == 17)){
 										c = 'r';
 										toggle = 1;
 									} else {
@@ -339,12 +341,12 @@ int main(int argc, char *argv[]){
 									if(placeShip(s2ships, i, x, y, c) != 0){
 										i--;
 									}
-									afficherFenetre(renderer, s2ships, s2touches, 0);
 									if(i == 5){
 										running = 0;
 									} else {
 										i++;
 									}
+									afficherFenetre(renderer, s2ships, s2touches, 0, infoShip[i]);
 									toggle = 0;
 								}
 
@@ -375,7 +377,7 @@ int main(int argc, char *argv[]){
 									height = event.window.data2;
 									printf("Size : %d%d\n", width, height);
 								default:
-									afficherFenetre(renderer, s2ships, s2touches, 0);
+									afficherFenetre(renderer, s2ships, s2touches, 0, 0);
 							}
 							break;
 						case SDL_MOUSEBUTTONDOWN:
@@ -435,7 +437,7 @@ int main(int argc, char *argv[]){
 								status = 1;
 							}	
 
-							afficherFenetre(renderer, s2ships, s2touches, status);
+							afficherFenetre(renderer, s2ships, s2touches, status, 0);
 
 							break;
 						case SDL_QUIT : 
@@ -461,7 +463,7 @@ int main(int argc, char *argv[]){
 									height = event.window.data2;
 									printf("Size : %d%d\n", width, height);
 								default:
-									afficherFenetre(renderer, s1ships, s1touches, status);
+									afficherFenetre(renderer, s1ships, s1touches, status, 0);
 							}
 							break;
 						case SDL_MOUSEBUTTONDOWN:

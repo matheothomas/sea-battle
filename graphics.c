@@ -91,7 +91,7 @@ void printSea(SDL_Renderer *renderer, sea **s1, sea **s2){
 	}
 }
 
-void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2, int stat){
+void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2, int stat, int shipInit){
 	SDL_Rect rect;
 
 	SDL_SetRenderDrawColor(renderer, 40, 40, 40, 255);
@@ -126,7 +126,6 @@ void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2, int stat){
 	titleRect.w = 320;
 	titleRect.h = 60;
 	SDL_RenderCopy(renderer, title, NULL, &titleRect);
-	
 	
 	// Game status
 	rect.x = 440;
@@ -184,6 +183,23 @@ void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2, int stat){
 	
 	if(stat != 0){
 		printInfo(renderer, stat);
+	}
+	
+	SDL_SetRenderDrawColor(renderer, 250, 250, 250, 255);
+	rect.x = 500;
+	rect.y = 460;
+	rect.w = 200;
+	rect.h = 40;
+	if(shipInit != 0){
+		SDL_RenderFillRect(renderer, &rect);
+		SDL_SetRenderDrawColor(renderer, 100, 100, 200, 255);
+		rect.x = 465;
+		rect.y = 465;
+		rect.w = rect.h = 31;
+		for(int j = 0; j < shipInit; j++){
+			rect.x += 40;
+			SDL_RenderFillRect(renderer, &rect);
+		}
 	}
 
 	printSea(renderer, s1, s2);	
