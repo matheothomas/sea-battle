@@ -61,5 +61,8 @@ The game is won when a player sunk all ships of the opponent.
 
 
 ## Additional info
-- The port 8080 is used for the socket.
+- The port `8080` is used for the socket.
 - To test the program, `preconfig` can be added as a supplementary parameter to load a ship configuration.
+
+### Showcase
+![game](example.png)
