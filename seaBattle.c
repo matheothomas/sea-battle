@@ -62,7 +62,7 @@ void showSea(sea **s1, sea **s2){
 
 int checkCoords(sea **s, int c1, int c2){
 	int res = 0;
-	if(c1 < 0 || c1 > SIZE || c2 < 0 || c2 > SIZE){
+	if(c1 < 0 || c1 >= SIZE || c2 < 0 || c2 >= SIZE){
 		res = 1;
 	} else {
 		if(s[c1][c2].isShip != 0){
