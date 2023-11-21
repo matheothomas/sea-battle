@@ -101,8 +101,10 @@ int main(int argc, char *argv[]){
 										width = event.window.data1;
 										height = event.window.data2;
 										printf("Size : %d%d\n", width, height);
+										break;
 									default:
 										afficherFenetre(renderer, s1ships, s1touches, 0, infoShip[i]);
+										break;
 								}
 								break;
 							case SDL_MOUSEBUTTONDOWN:
@@ -166,79 +168,80 @@ int main(int argc, char *argv[]){
 									width = event.window.data1;
 									height = event.window.data2;
 									printf("Size : %d%d\n", width, height);
+									break;
 								default:
 									afficherFenetre(renderer, s1ships, s1touches, status, 0);
 							}
 							break;
 						case SDL_MOUSEBUTTONDOWN:
 
-								y = (event.button.x-20)/40;
-								x = (event.button.y-20)/40;
+							y = (event.button.x-20)/40;
+							x = (event.button.y-20)/40;
 
 
-								if(x < 0 || x >= 10 || y < 0 || y >= 10){
-									printf("Wrong coordinates ! Retry.\n");
-								} 
-								
-								status = 4;
-								afficherFenetre(renderer, s1ships, s1touches, status, 0);
-								status = 0;
+							if(x < 0 || x >= 10 || y < 0 || y >= 10){
+								printf("Wrong coordinates ! Retry.\n");
+							} 
+
+							status = 4;
+							afficherFenetre(renderer, s1ships, s1touches, status, 0);
+							status = 0;
 
 
-								memset(buffer1, 0, sizeof(buffer1));
-								memset(s1, 0, sizeof(s1));
-								memset(posSent1, 0, sizeof(posSent1));
-								status = 0;
+							memset(buffer1, 0, sizeof(buffer1));
+							memset(s1, 0, sizeof(s1));
+							memset(posSent1, 0, sizeof(posSent1));
+							status = 0;
 
-								s1[0] = x + '0';
-								s1[1] = y + '0';
-								send(p.new_socket, s1, strlen(s1), 0);
+							s1[0] = x + '0';
+							s1[1] = y + '0';
+							send(p.new_socket, s1, strlen(s1), 0);
 
-								// Receiving coordinates
-								p.valread = read(p.new_socket, buffer1, 1024-1);
-								buffer1[2] = '\0';
-								c1 = atoi(buffer1)/10;
-								c2 = atoi(&buffer1[1]);
-								memset(buffer1, 0, sizeof(buffer1));
-								isShipTouched = received(s1ships, c1, c2);
-								if(isShipTouched == 2){
-									gameStatus = victoire(s1ships[c1][c2].isShip);
-								} else {
-									gameStatus = 0;
-								}
+							// Receiving coordinates
+							p.valread = read(p.new_socket, buffer1, 1024-1);
+							buffer1[2] = '\0';
+							c1 = atoi(buffer1)/10;
+							c2 = atoi(&buffer1[1]);
+							memset(buffer1, 0, sizeof(buffer1));
+							isShipTouched = received(s1ships, c1, c2);
+							if(isShipTouched == 2){
+								gameStatus = victoire(s1ships[c1][c2].isShip);
+							} else {
+								gameStatus = 0;
+							}
 
-								// Sending results
-								posSent1[0] = isShipTouched + '0';
-								posSent1[1] = gameStatus + '0';
-								//sleep(1);	
-								usleep(1000);
-								send(p.new_socket, posSent1, strlen(posSent1), 0);
-								if(gameStatus == 2){
-									printf("Perdu...\n");
-									status = 3;
-									running = 0;
-									break;
-								}	
+							// Sending results
+							posSent1[0] = isShipTouched + '0';
+							posSent1[1] = gameStatus + '0';
+							//sleep(1);	
+							usleep(1000);
+							send(p.new_socket, posSent1, strlen(posSent1), 0);
+							if(gameStatus == 2){
+								printf("Perdu...\n");
+								status = 3;
+								running = 0;
+								break;
+							}	
 
-								// Applying results
-								p.valread = read(p.new_socket, buffer1, 1024-1);
-								s1[2] = '\0';
-								c1 = atoi(&s1[0])/10;
-								c2 = atoi(&s1[1]);
-								c3 = atoi(&buffer1[0])/10;
-								c4 = atoi(&buffer1[1]);
-								sent(s1touches, c1, c2, c3); //Filling the upper map
-								if(c4 == 2){
-									printf("Gagné !\n");
-									status = 2;
-									running = 0;
-									break;
-								} else if(c4 == 1){
-									printf("Coulé !\n");
-									status = 1;
-								}	
+							// Applying results
+							p.valread = read(p.new_socket, buffer1, 1024-1);
+							s1[2] = '\0';
+							c1 = atoi(&s1[0])/10;
+							c2 = atoi(&s1[1]);
+							c3 = atoi(&buffer1[0])/10;
+							c4 = atoi(&buffer1[1]);
+							sent(s1touches, c1, c2, c3); //Filling the upper map
+							if(c4 == 2){
+								printf("Gagné !\n");
+								status = 2;
+								running = 0;
+								break;
+							} else if(c4 == 1){
+								printf("Coulé !\n");
+								status = 1;
+							}	
 
-								afficherFenetre(renderer, s1ships, s1touches, status, 0);
+							afficherFenetre(renderer, s1ships, s1touches, status, 0);
 
 							break;
 						case SDL_QUIT : 
@@ -263,6 +266,7 @@ int main(int argc, char *argv[]){
 									width = event.window.data1;
 									height = event.window.data2;
 									printf("Size : %d%d\n", width, height);
+									break;
 								default:
 									afficherFenetre(renderer, s1ships, s1touches, status, 0);
 							}
@@ -322,6 +326,7 @@ int main(int argc, char *argv[]){
 										width = event.window.data1;
 										height = event.window.data2;
 										printf("Size : %d%d\n", width, height);
+										break;
 									default:
 										afficherFenetre(renderer, s2ships, s2touches, 0, infoShip[i]);
 								}
@@ -387,77 +392,78 @@ int main(int argc, char *argv[]){
 									width = event.window.data1;
 									height = event.window.data2;
 									printf("Size : %d%d\n", width, height);
+									break;
 								default:
 									afficherFenetre(renderer, s2ships, s2touches, status, 0);
 							}
 							break;
 						case SDL_MOUSEBUTTONDOWN:
 
-								y = (event.button.x-20)/40;
-								x = (event.button.y-20)/40;
+							y = (event.button.x-20)/40;
+							x = (event.button.y-20)/40;
 
-								if(x < 0 || x >= 10 || y < 0 || y >= 10){
-									printf("Wrong coordinates ! Retry.\n");
-								}
-								
-								status = 4;
-								afficherFenetre(renderer, s2ships, s2touches, status, 0);
-								status = 0;
-							
-								memset(buffer2, 0, sizeof(buffer2));
-								memset(s2, 0, sizeof(s2));
-								memset(posSent2, 0, sizeof(posSent2));
-								status = 0;
+							if(x < 0 || x >= 10 || y < 0 || y >= 10){
+								printf("Wrong coordinates ! Retry.\n");
+							}
 
-								s2[0] = x + '0';
-								s2[1] = y + '0';
-								send(p.client_fd, s2, strlen(s2), 0);
+							status = 4;
+							afficherFenetre(renderer, s2ships, s2touches, status, 0);
+							status = 0;
 
-								// Receiving coordinates
-								p.valread = read(p.client_fd, buffer2, 1024-1);
-								buffer2[2] = '\0';
-								c1 = atoi(buffer2)/10;
-								c2 = atoi(&buffer2[1]);
-								memset(buffer2, 0, sizeof(buffer2));
-								isShipTouched = received(s2ships, c1, c2);
-								if(isShipTouched == 2){
-									gameStatus = victoire(s2ships[c1][c2].isShip);
-								} else {
-									gameStatus = 0;
-								}
+							memset(buffer2, 0, sizeof(buffer2));
+							memset(s2, 0, sizeof(s2));
+							memset(posSent2, 0, sizeof(posSent2));
+							status = 0;
 
-								// Sending results
-								posSent2[0] = isShipTouched + '0';
-								posSent2[1] = gameStatus + '0';
-								//sleep(1);	
-								usleep(1000);
-								send(p.client_fd, posSent2, strlen(posSent2), 0);
-								if(gameStatus == 2){
-									printf("Perdu...\n");
-									status = 3;
-									running = 0;
-									break;
-								}	
+							s2[0] = x + '0';
+							s2[1] = y + '0';
+							send(p.client_fd, s2, strlen(s2), 0);
 
-								// Applying results
-								p.valread = read(p.client_fd, buffer2, 1024-1);
-								s2[2] = '\0';
-								c1 = atoi(&s2[0])/10;
-								c2 = atoi(&s2[1]);
-								c3 = atoi(&buffer2[0])/10;
-								c4 = atoi(&buffer2[1]);
-								sent(s2touches, c1, c2, c3);
-								if(c4 == 2){
-									printf("Gagné !\n");
-									status = 2;
-									running = 0;
-									break;
-								} else if(c4 == 1){
-									printf("Coulé !\n");
-									status = 1;
-								}	
+							// Receiving coordinates
+							p.valread = read(p.client_fd, buffer2, 1024-1);
+							buffer2[2] = '\0';
+							c1 = atoi(buffer2)/10;
+							c2 = atoi(&buffer2[1]);
+							memset(buffer2, 0, sizeof(buffer2));
+							isShipTouched = received(s2ships, c1, c2);
+							if(isShipTouched == 2){
+								gameStatus = victoire(s2ships[c1][c2].isShip);
+							} else {
+								gameStatus = 0;
+							}
 
-								afficherFenetre(renderer, s2ships, s2touches, status, 0);
+							// Sending results
+							posSent2[0] = isShipTouched + '0';
+							posSent2[1] = gameStatus + '0';
+							//sleep(1);	
+							usleep(1000);
+							send(p.client_fd, posSent2, strlen(posSent2), 0);
+							if(gameStatus == 2){
+								printf("Perdu...\n");
+								status = 3;
+								running = 0;
+								break;
+							}	
+
+							// Applying results
+							p.valread = read(p.client_fd, buffer2, 1024-1);
+							s2[2] = '\0';
+							c1 = atoi(&s2[0])/10;
+							c2 = atoi(&s2[1]);
+							c3 = atoi(&buffer2[0])/10;
+							c4 = atoi(&buffer2[1]);
+							sent(s2touches, c1, c2, c3);
+							if(c4 == 2){
+								printf("Gagné !\n");
+								status = 2;
+								running = 0;
+								break;
+							} else if(c4 == 1){
+								printf("Coulé !\n");
+								status = 1;
+							}	
+
+							afficherFenetre(renderer, s2ships, s2touches, status, 0);
 
 							break;
 						case SDL_QUIT : 
@@ -482,6 +488,7 @@ int main(int argc, char *argv[]){
 									width = event.window.data1;
 									height = event.window.data2;
 									printf("Size : %d%d\n", width, height);
+									break;
 								default:
 									afficherFenetre(renderer, s1ships, s1touches, status, 0);
 							}
