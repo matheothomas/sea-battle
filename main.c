@@ -152,7 +152,6 @@ int main(int argc, char *argv[]){
 
 			printf("Launching game.\n");
 			int status = 0;
-			int toggle = 0;
 			running = 1;
 
 			while(running){
@@ -172,7 +171,6 @@ int main(int argc, char *argv[]){
 							}
 							break;
 						case SDL_MOUSEBUTTONDOWN:
-							//if(toggle == 0){
 
 								y = (event.button.x-20)/40;
 								x = (event.button.y-20)/40;
@@ -180,16 +178,12 @@ int main(int argc, char *argv[]){
 
 								if(x < 0 || x >= 10 || y < 0 || y >= 10){
 									printf("Wrong coordinates ! Retry.\n");
-								} else {
-									toggle = 1;
-								}
+								} 
 								
 								status = 4;
 								afficherFenetre(renderer, s1ships, s1touches, status, 0);
 								status = 0;
-							//} 
 
-							//if(toggle == 1){
 
 								memset(buffer1, 0, sizeof(buffer1));
 								memset(s1, 0, sizeof(s1));
@@ -246,8 +240,6 @@ int main(int argc, char *argv[]){
 
 								afficherFenetre(renderer, s1ships, s1touches, status, 0);
 
-								toggle = 0;
-							//}
 							break;
 						case SDL_QUIT : 
 							printf("Quit game.\n");    
@@ -381,7 +373,6 @@ int main(int argc, char *argv[]){
 
 			printf("Launching game.\n");
 			int status = 0;
-			int toggle = 0;
 			running = 1;
 
 			while(running){
@@ -401,25 +392,18 @@ int main(int argc, char *argv[]){
 							}
 							break;
 						case SDL_MOUSEBUTTONDOWN:
-							//if(toggle == 0){
 
 								y = (event.button.x-20)/40;
 								x = (event.button.y-20)/40;
 
 								if(x < 0 || x >= 10 || y < 0 || y >= 10){
 									printf("Wrong coordinates ! Retry.\n");
-								} else {
-									toggle = 1;
 								}
 								
 								status = 4;
 								afficherFenetre(renderer, s2ships, s2touches, status, 0);
 								status = 0;
 							
-								//}
-
-							//if(toggle == 1){
-
 								memset(buffer2, 0, sizeof(buffer2));
 								memset(s2, 0, sizeof(s2));
 								memset(posSent2, 0, sizeof(posSent2));
@@ -475,9 +459,6 @@ int main(int argc, char *argv[]){
 
 								afficherFenetre(renderer, s2ships, s2touches, status, 0);
 
-								toggle = 0;
-
-							//}
 							break;
 						case SDL_QUIT : 
 							printf("Quit game.\n");    
