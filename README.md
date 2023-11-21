@@ -29,7 +29,7 @@ git clone https://github.com/matheothomas/sea-battle
 
 Move into the folder :
 ```bash
-cd sea-battle
+cd sea-battle/src
 ```
 
 Compile the code :
@@ -71,4 +71,4 @@ The game is won when a player sunk all ships of the opponent.
 - To test the program, `preconfig` can be added as a supplementary parameter to load a ship configuration.
 
 ### Showcase
-![game](example.png)
+![game](res/example.png)

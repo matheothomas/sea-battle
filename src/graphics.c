@@ -51,7 +51,7 @@ void printCrossBottom(SDL_Renderer *renderer, int y, int x){
 
 void printInfo(SDL_Renderer *renderer, int stat){
 	TTF_Font *font1;
-	font1 = TTF_OpenFont("BebasNeue-Regular.ttf", 100);
+	font1 = TTF_OpenFont("../res/BebasNeue-Regular.ttf", 100);
 	SDL_Color textColor = {100, 100, 200, 255};
 	
 	SDL_Surface *surfaceCoule;
@@ -113,7 +113,7 @@ void afficherFenetre(SDL_Renderer *renderer, sea **s1, sea **s2, int stat, int s
 	
 	// Font
 	TTF_Font *font1;
-	font1 = TTF_OpenFont("BebasNeue-Regular.ttf", 100);
+	font1 = TTF_OpenFont("../res/BebasNeue-Regular.ttf", 100);
 	SDL_Color textColor = {100, 100, 100, 255};
 	
 	// Title
