@@ -413,7 +413,7 @@ int main(int argc, char *argv[]){
 								}
 								
 								status = 4;
-								afficherFenetre(renderer, s1ships, s1touches, status, 0);
+								afficherFenetre(renderer, s2ships, s2touches, status, 0);
 								status = 0;
 							
 								//}
