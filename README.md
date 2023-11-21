@@ -12,6 +12,7 @@ This game helped me understand sockets in C, and has been a great project to mak
 
 ## Requirements
 - The SDL2 C library
+
 Can be installed with
 ```bash
 sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
