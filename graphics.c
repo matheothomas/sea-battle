@@ -62,6 +62,10 @@ void printInfo(SDL_Renderer *renderer, int stat){
 		surfaceCoule = TTF_RenderText_Solid(font1, "Gagne !", textColor);
 	} else if (stat == 3){
 		surfaceCoule = TTF_RenderText_Solid(font1, "Perdu...", textColor);
+	} else if (stat == 4){
+		surfaceCoule = TTF_RenderText_Solid(font1, "Attente...", textColor);
+	} else {
+		surfaceCoule = TTF_RenderText_Solid(font1, "", textColor);
 	}
 	
 	SDL_Texture *coule = SDL_CreateTextureFromSurface(renderer, surfaceCoule);

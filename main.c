@@ -172,7 +172,7 @@ int main(int argc, char *argv[]){
 							}
 							break;
 						case SDL_MOUSEBUTTONDOWN:
-							if(toggle == 0){
+							//if(toggle == 0){
 
 								y = (event.button.x-20)/40;
 								x = (event.button.y-20)/40;
@@ -183,10 +183,13 @@ int main(int argc, char *argv[]){
 								} else {
 									toggle = 1;
 								}
+								
+								status = 4;
+								afficherFenetre(renderer, s1ships, s1touches, status, 0);
+								status = 0;
+							//} 
 
-							} 
-
-							if(toggle == 1){
+							//if(toggle == 1){
 
 								memset(buffer1, 0, sizeof(buffer1));
 								memset(s1, 0, sizeof(s1));
@@ -244,7 +247,7 @@ int main(int argc, char *argv[]){
 								afficherFenetre(renderer, s1ships, s1touches, status, 0);
 
 								toggle = 0;
-							}
+							//}
 							break;
 						case SDL_QUIT : 
 							printf("Quit game.\n");    
@@ -376,10 +379,10 @@ int main(int argc, char *argv[]){
 				}
 			}
 
+			printf("Launching game.\n");
 			int status = 0;
 			int toggle = 0;
 			running = 1;
-			printf("Launching game.\n");
 
 			while(running){
 				while(SDL_PollEvent(&event)){
@@ -398,7 +401,7 @@ int main(int argc, char *argv[]){
 							}
 							break;
 						case SDL_MOUSEBUTTONDOWN:
-							if(toggle == 0){
+							//if(toggle == 0){
 
 								y = (event.button.x-20)/40;
 								x = (event.button.y-20)/40;
@@ -408,9 +411,14 @@ int main(int argc, char *argv[]){
 								} else {
 									toggle = 1;
 								}
-							}
+								
+								status = 4;
+								afficherFenetre(renderer, s1ships, s1touches, status, 0);
+								status = 0;
+							
+								//}
 
-							if(toggle == 1){
+							//if(toggle == 1){
 
 								memset(buffer2, 0, sizeof(buffer2));
 								memset(s2, 0, sizeof(s2));
@@ -469,7 +477,7 @@ int main(int argc, char *argv[]){
 
 								toggle = 0;
 
-							}
+							//}
 							break;
 						case SDL_QUIT : 
 							printf("Quit game.\n");    
