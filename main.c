@@ -74,7 +74,7 @@ int main(int argc, char *argv[]){
 			}
 
 			char buffer1[1024] = { 0 };
-			char s1[2];
+			char s1[3];
 			char posSent1[2];
 			int c1, c2, c3, c4;
 			int isShipTouched;
@@ -301,7 +301,7 @@ int main(int argc, char *argv[]){
 			}
 
 			char buffer2[1024] = { 0 };
-			char s2[2];
+			char s2[3];
 			char posSent2[2];
 			int c1, c2, c3, c4;
 			int isShipTouched;
