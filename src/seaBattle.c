@@ -6,6 +6,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"seaBattle.h"
+#inclde <stdlib.h>
 
 #define SIZE 10
 
